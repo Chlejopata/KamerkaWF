@@ -21,10 +21,9 @@ namespace KamerkaWF
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource;
         private Bitmap currentFrame;
-        private Bitmap threadFrame;
         private Thread captureThread;
-        private bool recordVideo;
         private AVIWriter writer;
+        private bool recordVideo;
         public Form1()
         {
             InitializeComponent();
@@ -90,8 +89,13 @@ namespace KamerkaWF
             currentFrame = (Bitmap)eventArgs.Frame.Clone();
             if ((captureThread == null || !captureThread.IsAlive) && recordVideo)
             {
-                threadFrame = new Bitmap(currentFrame);
-                captureThread = new Thread(new ThreadStart(delegate { writer.AddFrame(threadFrame);}));
+                Bitmap threadFrame = (Bitmap)currentFrame.Clone();
+                captureThread = new Thread(
+                        new ThreadStart(
+                            delegate
+                            {
+                                writer.AddFrame(threadFrame);
+                            }));
                 captureThread.Start();
             }
 
@@ -210,11 +214,10 @@ namespace KamerkaWF
                     writer.FrameRate = videoSource.VideoResolution.AverageFrameRate;
                     var width = videoSource.VideoResolution.FrameSize.Width;
                     var height = videoSource.VideoResolution.FrameSize.Height;
-                    MessageBox.Show(writer.FrameRate.ToString());
+
                     writer.Open(dialog.FileName, width, height);
                     recordVideo = true;
                 }
-                
             }
             else
             {
