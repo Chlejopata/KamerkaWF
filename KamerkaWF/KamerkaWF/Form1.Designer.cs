@@ -32,6 +32,8 @@
             this.CamerasCB = new System.Windows.Forms.ComboBox();
             this.CaptureButton = new System.Windows.Forms.Button();
             this.ResolutionCB = new System.Windows.Forms.ComboBox();
+            this.SnapshotButton = new System.Windows.Forms.Button();
+            this.RecordButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CaptureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,11 +83,35 @@
             this.ResolutionCB.TabIndex = 3;
             this.ResolutionCB.SelectedIndexChanged += new System.EventHandler(this.ResolutionCB_SelectedIndexChanged);
             // 
+            // SnapshotButton
+            // 
+            this.SnapshotButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.SnapshotButton.Location = new System.Drawing.Point(140, 252);
+            this.SnapshotButton.Name = "SnapshotButton";
+            this.SnapshotButton.Size = new System.Drawing.Size(95, 23);
+            this.SnapshotButton.TabIndex = 4;
+            this.SnapshotButton.Text = "Take snapshot";
+            this.SnapshotButton.UseVisualStyleBackColor = true;
+            this.SnapshotButton.Click += new System.EventHandler(this.SnapshotButton_Click);
+            // 
+            // RecordButton
+            // 
+            this.RecordButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.RecordButton.Location = new System.Drawing.Point(241, 252);
+            this.RecordButton.Name = "RecordButton";
+            this.RecordButton.Size = new System.Drawing.Size(122, 23);
+            this.RecordButton.TabIndex = 5;
+            this.RecordButton.Text = "Record";
+            this.RecordButton.UseVisualStyleBackColor = true;
+            this.RecordButton.Click += new System.EventHandler(this.RecordButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(649, 294);
+            this.Controls.Add(this.RecordButton);
+            this.Controls.Add(this.SnapshotButton);
             this.Controls.Add(this.ResolutionCB);
             this.Controls.Add(this.CaptureButton);
             this.Controls.Add(this.CamerasCB);
@@ -105,6 +131,8 @@
         private System.Windows.Forms.ComboBox CamerasCB;
         private System.Windows.Forms.Button CaptureButton;
         private System.Windows.Forms.ComboBox ResolutionCB;
+        private System.Windows.Forms.Button SnapshotButton;
+        private System.Windows.Forms.Button RecordButton;
     }
 }
 
