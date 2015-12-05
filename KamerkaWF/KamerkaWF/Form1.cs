@@ -20,10 +20,12 @@ namespace KamerkaWF
     {
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource;
-        private Bitmap currentFrame;
-        private Thread captureThread;
+        private Bitmap currentFrame, browserFrame;
+        private Thread captureThread, browserThread;
         private AVIWriter writer;
-        private bool recordVideo;
+        private bool recordVideo, browserRunning;
+        private System.Timers.Timer timer;
+        public string mainPath;
         public Form1()
         {
             InitializeComponent();
@@ -36,9 +38,11 @@ namespace KamerkaWF
             {
                 CamerasCB.Items.Add(fi.Name);
             }
+            //CamerasCB.SelectedIndex = 0;
             videoSource = null;
             captureThread = null;
             recordVideo = false;
+            browserRunning = false;
 
             CaptureButton.Enabled = false;
             SnapshotButton.Enabled = false;
@@ -73,11 +77,13 @@ namespace KamerkaWF
                                 CaptureBox.Image = null;
                                 CaptureBox.Invalidate();
                             }));
+                    CaptureButton.Name = "Start";
                 }
                 else
                 {
                     videoSource.NewFrame += videoSource_NewFrame;
                     videoSource.Start();
+                    CaptureButton.Name = "Stop";
                 }
                 SnapshotButton.Enabled = videoSource.IsRunning;
                 RecordButton.Enabled = videoSource.IsRunning;
@@ -87,6 +93,8 @@ namespace KamerkaWF
         void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             currentFrame = (Bitmap)eventArgs.Frame.Clone();
+            browserFrame = (Bitmap)eventArgs.Frame.Clone();
+
             if ((captureThread == null || !captureThread.IsAlive) && recordVideo)
             {
                 Bitmap threadFrame = (Bitmap)currentFrame.Clone();
@@ -99,6 +107,16 @@ namespace KamerkaWF
                 captureThread.Start();
             }
 
+
+            if ((browserThread == null || !browserThread.IsAlive) && browserRunning)
+            {
+                
+
+                    browserThread = new Thread(new ThreadStart(BrowserSnapshot));
+                    browserRunning = true;
+                    browserThread.Start();
+            }
+
             CaptureBox.Invoke(
                 new Action(
                     delegate
@@ -109,21 +127,11 @@ namespace KamerkaWF
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            recordVideo = false;
+            browserRunning = false;
             if (videoSource.IsRunning)
             {
                 videoSource.SignalToStop();
-
-                for (int i = 0; i < 30; i++)
-                {
-                    if (!videoSource.IsRunning)
-                        break;
-                    System.Threading.Thread.Sleep(100);
-                }
-
-                if (videoSource.IsRunning)
-                {
-                    videoSource.Stop();
-                }
 
                 CaptureBox.Invoke(
                     new Action(
@@ -167,10 +175,10 @@ namespace KamerkaWF
         }
 
         private void SnapshotButton_Click(object sender, EventArgs e)
-        {
+        {        
             Bitmap snapshot = (Bitmap)currentFrame.Clone();
             SaveFileDialog dialog = new SaveFileDialog();
-
+         
             dialog.Filter = "Mapa bitowa BMP (*.bmp)|*.bmp|Plik JPEG (*.jpg)|*.jpg|Plik PNG (*.png)|*.png";
             dialog.FilterIndex = 1;
             dialog.RestoreDirectory = true;
@@ -193,6 +201,7 @@ namespace KamerkaWF
                             format = ImageFormat.Png;
                             break;
                     }
+                    
                     snapshot.Save(fileStream, format);
                     fileStream.Close();
                 }
@@ -211,12 +220,13 @@ namespace KamerkaWF
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     writer = new AVIWriter("cvid");
-                    writer.FrameRate = videoSource.VideoResolution.AverageFrameRate;
+                    writer.FrameRate = 5;
                     var width = videoSource.VideoResolution.FrameSize.Width;
                     var height = videoSource.VideoResolution.FrameSize.Height;
 
                     writer.Open(dialog.FileName, width, height);
                     recordVideo = true;
+                    RecordButton.Name = "Stop recording";
                 }
             }
             else
@@ -224,6 +234,37 @@ namespace KamerkaWF
                 recordVideo = false;
                 captureThread.Join();
                 writer.Close();
+                RecordButton.Name = "Recording";
+            }
+        }
+
+        private void BrowserButton_Click(object sender, EventArgs e)
+        {
+            if(browserThread == null)
+            {
+                browserThread = new Thread(new ThreadStart(BrowserSnapshot));
+                browserRunning = true;
+                browserThread.Start();
+                BrowserButton.Name = "Stop stream";
+                System.Diagnostics.Process.Start("strona.html");
+            }
+            else if(browserThread.IsAlive)
+            {
+
+                browserRunning = false;
+                browserThread.Join();
+                BrowserButton.Name = "Open browser";
+            }
+        }
+
+        private void BrowserSnapshot()
+        {
+            string path = "plik.png";
+            while(browserRunning)
+            {
+                //MessageBox.Show(path);
+                browserFrame.Save(path, ImageFormat.Png);
+                Thread.Sleep(1000);
             }
         }
     }

@@ -12,11 +12,14 @@ namespace KamerkaWF
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Form1 form = new Form1();
+            //form.mainPath = args[0];
             Application.Run(new Form1());
+
         }
     }
 }

@@ -34,6 +34,7 @@
             this.ResolutionCB = new System.Windows.Forms.ComboBox();
             this.SnapshotButton = new System.Windows.Forms.Button();
             this.RecordButton = new System.Windows.Forms.Button();
+            this.BrowserButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CaptureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             this.CaptureBox.BackColor = System.Drawing.SystemColors.Desktop;
             this.CaptureBox.Location = new System.Drawing.Point(12, 12);
             this.CaptureBox.Name = "CaptureBox";
-            this.CaptureBox.Size = new System.Drawing.Size(625, 180);
+            this.CaptureBox.Size = new System.Drawing.Size(509, 254);
             this.CaptureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.CaptureBox.TabIndex = 0;
             this.CaptureBox.TabStop = false;
@@ -55,20 +56,20 @@
             this.CamerasCB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CamerasCB.FormattingEnabled = true;
-            this.CamerasCB.Location = new System.Drawing.Point(12, 198);
+            this.CamerasCB.Location = new System.Drawing.Point(12, 272);
             this.CamerasCB.Name = "CamerasCB";
-            this.CamerasCB.Size = new System.Drawing.Size(625, 21);
+            this.CamerasCB.Size = new System.Drawing.Size(509, 21);
             this.CamerasCB.TabIndex = 1;
             this.CamerasCB.SelectedIndexChanged += new System.EventHandler(this.CamerasCB_SelectedIndexChanged);
             // 
             // CaptureButton
             // 
             this.CaptureButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CaptureButton.Location = new System.Drawing.Point(12, 252);
+            this.CaptureButton.Location = new System.Drawing.Point(12, 326);
             this.CaptureButton.Name = "CaptureButton";
             this.CaptureButton.Size = new System.Drawing.Size(122, 23);
             this.CaptureButton.TabIndex = 2;
-            this.CaptureButton.Text = "Start / Stop";
+            this.CaptureButton.Text = "Start";
             this.CaptureButton.UseVisualStyleBackColor = true;
             this.CaptureButton.Click += new System.EventHandler(this.CaptureButton_Click);
             // 
@@ -77,16 +78,16 @@
             this.ResolutionCB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ResolutionCB.FormattingEnabled = true;
-            this.ResolutionCB.Location = new System.Drawing.Point(13, 225);
+            this.ResolutionCB.Location = new System.Drawing.Point(13, 299);
             this.ResolutionCB.Name = "ResolutionCB";
-            this.ResolutionCB.Size = new System.Drawing.Size(624, 21);
+            this.ResolutionCB.Size = new System.Drawing.Size(508, 21);
             this.ResolutionCB.TabIndex = 3;
             this.ResolutionCB.SelectedIndexChanged += new System.EventHandler(this.ResolutionCB_SelectedIndexChanged);
             // 
             // SnapshotButton
             // 
             this.SnapshotButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SnapshotButton.Location = new System.Drawing.Point(140, 252);
+            this.SnapshotButton.Location = new System.Drawing.Point(140, 326);
             this.SnapshotButton.Name = "SnapshotButton";
             this.SnapshotButton.Size = new System.Drawing.Size(95, 23);
             this.SnapshotButton.TabIndex = 4;
@@ -97,7 +98,7 @@
             // RecordButton
             // 
             this.RecordButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RecordButton.Location = new System.Drawing.Point(241, 252);
+            this.RecordButton.Location = new System.Drawing.Point(241, 326);
             this.RecordButton.Name = "RecordButton";
             this.RecordButton.Size = new System.Drawing.Size(122, 23);
             this.RecordButton.TabIndex = 5;
@@ -105,11 +106,23 @@
             this.RecordButton.UseVisualStyleBackColor = true;
             this.RecordButton.Click += new System.EventHandler(this.RecordButton_Click);
             // 
+            // BrowserButton
+            // 
+            this.BrowserButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BrowserButton.Location = new System.Drawing.Point(369, 326);
+            this.BrowserButton.Name = "BrowserButton";
+            this.BrowserButton.Size = new System.Drawing.Size(122, 23);
+            this.BrowserButton.TabIndex = 6;
+            this.BrowserButton.Text = "Open browser";
+            this.BrowserButton.UseVisualStyleBackColor = true;
+            this.BrowserButton.Click += new System.EventHandler(this.BrowserButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 294);
+            this.ClientSize = new System.Drawing.Size(533, 368);
+            this.Controls.Add(this.BrowserButton);
             this.Controls.Add(this.RecordButton);
             this.Controls.Add(this.SnapshotButton);
             this.Controls.Add(this.ResolutionCB);
@@ -133,6 +146,7 @@
         private System.Windows.Forms.ComboBox ResolutionCB;
         private System.Windows.Forms.Button SnapshotButton;
         private System.Windows.Forms.Button RecordButton;
+        private System.Windows.Forms.Button BrowserButton;
     }
 }
 
